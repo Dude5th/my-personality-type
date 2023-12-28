@@ -9,7 +9,7 @@ import { Score, getScore } from '../../helpers/scoreHelper';
 import Results from '../components/Results';
 
 export default function PersonalityAnalysisScreen() {
-	const [counter, setCounter] = useState<number>(0);
+	const [counter, setCounter] = useState<number>(1); // must be >= 1
 	const [mostData, setMostData] = useState<DiscEnum[]>([]);
 	const [leastData, setLeastData] = useState<DiscEnum[]>([]);
 	const [score, setScore] = useState<Score | undefined>();
@@ -62,7 +62,7 @@ export default function PersonalityAnalysisScreen() {
 				)}
 
 				<View style={styles.controls}>
-					<Button disabled={counter === 0} onPress={() => setCounter(counter - 1)}>
+					<Button disabled={counter === 1} onPress={() => setCounter(counter - 1)}>
 						Back
 					</Button>
 					<Button disabled={counter >= questions.length} onPress={OnNext}>
