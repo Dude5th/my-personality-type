@@ -1,81 +1,153 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
-import MostLeastChoices from '../components/MostLeastChoices';
-import questions from '../../helpers/questions';
 import AppScreen from '../components/AppScreen';
-import { DiscEnum } from '../../enums/DiscEnum';
+import AppText from '../components/AppText';
 import { Button } from 'react-native-paper';
-import { Score, getScore } from '../../helpers/scoreHelper';
-import Results from '../components/Results';
+import { DiscEnum } from '../../enums/DiscEnum';
+import AppButton from '../components/AppButton';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 export default function HomeScreen() {
-	const [counter, setCounter] = useState<number>(25);
-	const [mostData, setMostData] = useState<DiscEnum[]>([]);
-	const [leastData, setLeastData] = useState<DiscEnum[]>([]);
-	const [score, setScore] = useState<Score>({
-		score: { D: 7, I: -3, S: -5, C: 0, Star: 0 },
-		mostScore: { D: 8, I: 2, S: 3, C: 5, Star: 6 },
-		leastScore: { D: 1, I: 5, S: 8, C: 5, Star: 5 },
-	});
+	const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
+	const [outgoing, setOutgoing] = useState<boolean | undefined>();
+	const [task, setTask] = useState<boolean | undefined>();
+	function GetDisc() {
+		if (outgoing && task) return DiscEnum.D;
+		if (outgoing && !task) return DiscEnum.I;
+		if (!outgoing && !task) return DiscEnum.S;
+		if (!outgoing && task) return DiscEnum.C;
+		return '';
+	}
 
-	const onMostChange = (most: DiscEnum) => {
-		if (mostData.length < counter) {
-			setMostData([...mostData, most]);
-		} else {
-			setMostData([...mostData.slice(0, counter - 1), most]);
+	function Score() {
+		const score = GetDisc();
+		switch (score) {
+			case DiscEnum.D:
+				return 'D 	= Outgoing + Task';
+			case DiscEnum.I:
+				return 'I 	= Outgoing + People';
+			case DiscEnum.S:
+				return 'S 	= Reserved + People';
+			case DiscEnum.C:
+				return 'C 	= Reserved + Task';
+			default:
+				return '';
 		}
-	};
-	const onLeastChange = (least: DiscEnum) => {
-		if (leastData.length < counter) {
-			setLeastData([...leastData, least]);
-		} else {
-			setLeastData([...leastData.slice(0, counter - 1), least]);
-		}
-	};
+	}
 
-	const OnNext = () => {
-		if (counter < questions.length + 1) {
-			setCounter(counter + 1);
-			if (counter < questions.length) {
-				const score = getScore(mostData, leastData);
-				setScore(score);
-			}
+	function getFears() {
+		const score = GetDisc();
+		switch (score) {
+			case DiscEnum.D:
+				return ['Fear 1: Being taken advantage of', 'Fear 2: Failure'];
+			case DiscEnum.I:
+				return ['Fear 1: Rejection', 'Fear 2: Loss of popularity'];
+			case DiscEnum.S:
+				return ['Fear 1: Loss of security', 'Fear 2: change'];
+			case DiscEnum.C:
+				return ['Fear 1: Criticism', 'Fear 2: Conflict'];
+			default:
+				return [];
 		}
-	};
+	}
 
+	function getManagementStyle() {
+		const score = GetDisc();
+		switch (score) {
+			case DiscEnum.D:
+				return ['Style 1: Force of character', 'Style 2: "Do It!"'];
+			case DiscEnum.I:
+				return ['Style 1: Verbal persuasion', 'Style 2: "You can do it"'];
+			case DiscEnum.S:
+				return ['Style 1: Slow down', 'Style 2: "We can do it"'];
+			case DiscEnum.C:
+				return ['Style 1: Information', `Style 2: "Let's do it right"`];
+			default:
+				return [];
+		}
+	}
+
+	function getPersonalityGoals() {
+		const score = GetDisc();
+		switch (score) {
+			case DiscEnum.D:
+				return 'Have Control';
+			case DiscEnum.I:
+				return 'Have fun';
+			case DiscEnum.S:
+				return 'have security';
+			case DiscEnum.C:
+				return 'Have perfection';
+			default:
+				return '';
+		}
+	}
+
+	const Summary = (
+		<>
+			<AppText style={styles.subTitle}>You have chosen:</AppText>
+			<AppText style={styles.text}>{Score()}</AppText>
+
+			<AppText style={styles.subTitle}>Greatest Fears</AppText>
+			{getFears().map(fear => (
+				<AppText key={fear} style={styles.text}>
+					{fear}
+				</AppText>
+			))}
+
+			<AppText style={styles.subTitle}>Management style</AppText>
+			{getManagementStyle().map(mgSt => (
+				<AppText key={mgSt} style={styles.text}>
+					{mgSt}
+				</AppText>
+			))}
+
+			<AppText style={styles.subTitle}>Personality goals</AppText>
+			<AppText style={styles.text}>{getPersonalityGoals()}</AppText>
+			<AppButton onPress={() => navigation.navigate('PersonalityAnalysis')}>Get more information</AppButton>
+			<Button style={{}} onPress={() => setTask(undefined)}>
+				Back
+			</Button>
+		</>
+	);
+	const ReservedFinalChoice =
+		task === undefined ? (
+			<>
+				<AppText style={styles.text}>What Behavioural Model are you?</AppText>
+				<AppButton onPress={() => setTask(true)}>Task Orientated</AppButton>
+				<AppButton onPress={() => setTask(false)}>People Orientated</AppButton>
+				<Button style={{}} onPress={() => setOutgoing(undefined)}>
+					Back
+				</Button>
+			</>
+		) : (
+			Summary
+		);
 	return (
 		<AppScreen>
-			<View>
-				{counter === questions.length + 1 ? (
-					<Results score={score.score} most={score.mostScore} least={score.leastScore} />
-				) : (
-					<MostLeastChoices
-						most={mostData[counter - 1]}
-						least={leastData[counter - 1]}
-						number={counter}
-						data={questions[counter - 1]}
-						onMostChange={onMostChange}
-						onLeastChange={onLeastChange}
-					/>
-				)}
+			<View style={styles.container}>
+				<AppText style={styles.title} title>
+					DISC: People Power
+				</AppText>
 
-				<View style={styles.controls}>
-					<Button disabled={counter === 0} onPress={() => setCounter(counter - 1)}>
-						Back
-					</Button>
-					<Button disabled={counter >= questions.length} onPress={OnNext}>
-						Next
-					</Button>
-				</View>
+				{outgoing === undefined ? (
+					<>
+						<AppText style={styles.text}>What Behavioural Model are you?</AppText>
+						<AppButton onPress={() => setOutgoing(true)}>Outgoing</AppButton>
+						<AppButton onPress={() => setOutgoing(false)}>Reserved</AppButton>
+					</>
+				) : (
+					ReservedFinalChoice
+				)}
 			</View>
 		</AppScreen>
 	);
 }
 
 const styles = StyleSheet.create({
-	controls: {
-		marginTop: 20,
-		flexDirection: 'row',
-		justifyContent: 'space-evenly',
-	},
+	container: { flex: 1 },
+	title: { textAlign: 'center', fontSize: 25 },
+	text: { textAlign: 'center' },
+	subTitle: { textAlign: 'center', fontWeight: 'bold', padding: 20 },
 });

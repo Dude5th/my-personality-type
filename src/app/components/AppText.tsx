@@ -1,10 +1,10 @@
-import { StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
 import React from 'react';
 
 type props = {
 	children: string;
 	title?: boolean;
-	style?: StyleProp<ViewStyle>;
+	style?: StyleProp<TextStyle>;
 };
 
 export default function AppText({ children, style, title = false }: Readonly<props>) {
