@@ -19,8 +19,13 @@ export default function SideScreen({ navigation }: Readonly<DrawerContentCompone
 				<MyDrawerItem label='Home' iconName='home-outline' onPress={() => navigation.navigate('Home')} />
 				<MyDrawerItem
 					label='Personality Analysis'
-					iconName='account-outline'
+					iconName='alpha-p-box'
 					onPress={() => navigation.navigate('PersonalityAnalysis')}
+				/>
+				<MyDrawerItem
+					label='Personality Types'
+					iconName='alpha-t-box-outline'
+					onPress={() => navigation.navigate('PersonalityTypes')}
 				/>
 				{/* <MyDrawerItem label='Profile' iconName='account-outline' onPress={() => navigation.navigate('Profile')} /> */}
 			</Drawer.Section>

@@ -3,6 +3,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 export type DrawerStackParamList = {
 	Home: undefined;
 	PersonalityAnalysis: undefined;
+	PersonalityTypes: undefined;
 	Profile: undefined;
 };
 

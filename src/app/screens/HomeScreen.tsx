@@ -2,11 +2,11 @@ import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
-import { Button } from 'react-native-paper';
 import { DiscEnum } from '../../enums/DiscEnum';
 import AppButton from '../components/AppButton';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import BackButton from '../components/BackButton';
 
 export default function HomeScreen() {
 	const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
@@ -24,13 +24,13 @@ export default function HomeScreen() {
 		const score = GetDisc();
 		switch (score) {
 			case DiscEnum.D:
-				return 'D 	= Outgoing + Task';
+				return 'Outgoing & Task Orientated';
 			case DiscEnum.I:
-				return 'I 	= Outgoing + People';
+				return 'Outgoing & People Orientated';
 			case DiscEnum.S:
-				return 'S 	= Reserved + People';
+				return 'Reserved & People Orientated';
 			case DiscEnum.C:
-				return 'C 	= Reserved + Task';
+				return 'Reserved & Task Orientated';
 			default:
 				return '';
 		}
@@ -76,7 +76,7 @@ export default function HomeScreen() {
 			case DiscEnum.I:
 				return 'Have fun';
 			case DiscEnum.S:
-				return 'have security';
+				return 'Have security';
 			case DiscEnum.C:
 				return 'Have perfection';
 			default:
@@ -106,30 +106,29 @@ export default function HomeScreen() {
 			<AppText style={styles.subTitle}>Personality goals</AppText>
 			<AppText style={styles.text}>{getPersonalityGoals()}</AppText>
 			<AppButton onPress={() => navigation.navigate('PersonalityAnalysis')}>Get more information</AppButton>
-			<Button style={{}} onPress={() => setTask(undefined)}>
-				Back
-			</Button>
+			<BackButton onPress={() => setTask(undefined)} />
 		</>
 	);
+
 	const ReservedFinalChoice =
 		task === undefined ? (
 			<>
 				<AppText style={styles.text}>What Behavioural Model are you?</AppText>
 				<AppButton onPress={() => setTask(true)}>Task Orientated</AppButton>
 				<AppButton onPress={() => setTask(false)}>People Orientated</AppButton>
-				<Button style={{}} onPress={() => setOutgoing(undefined)}>
-					Back
-				</Button>
+				<BackButton onPress={() => setOutgoing(undefined)} />
 			</>
 		) : (
 			Summary
 		);
+
 	return (
 		<AppScreen>
 			<View style={styles.container}>
 				<AppText style={styles.title} title>
-					DISC: People Power
+					Personality Analyser
 				</AppText>
+				<AppText style={styles.text}> Analyser People giving you Power </AppText>
 
 				{outgoing === undefined ? (
 					<>

@@ -1,13 +1,15 @@
 import { Dimensions, StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import AppText from './AppText';
 import { DiscS } from '../../helpers/scoreHelper';
 import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Table, Col, Row, Rows, TableWrapper } from 'react-native-table-component';
+import { Table, Col, Row, Rows, TableWrapper } from 'react-native-reanimated-table';
+import { Button } from 'react-native-paper';
 
 export default function Results({ score, most, least }: Readonly<{ most: DiscS; least: DiscS; score: DiscS }>) {
 	const screenWidth = Dimensions.get('window').width - 20;
+	const [showTable, setShowTable] = useState<boolean>(false);
 	const chartConfig = {
 		backgroundGradientFrom: '#ADADDD',
 		backgroundGradientFromOpacity: 0.5,
@@ -59,29 +61,18 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 		],
 		legend: ['Change'], // optional
 	};
+	const state = {
+		tableHead: ['', 'D', 'I', 'S', 'C', 'Star'],
+		tableTitle: ['MOST', 'LEAST', 'Change'],
+		tableData: [
+			[most.D.toString(), most.I.toString(), most.S.toString(), most.C.toString(), most.Star.toString()],
+			[least.D.toString(), least.I.toString(), least.S.toString(), least.C.toString(), least.Star.toString()],
+			[score.D.toString(), score.I.toString(), score.S.toString(), score.C.toString(), ''],
+		],
+	};
 	return (
 		<ScrollView>
-			<Table borderStyle={{ borderWidth: 0 }}>
-				<Row
-					data={['', 'D', 'I', 'S', 'C', 'Star']}
-					flexArr={[1, 1, 1, 1, 1]}
-					style={styles.head}
-					textStyle={[styles.text, { fontWeight: 'bold' }]}
-				/>
-				<TableWrapper style={styles.wrapper}>
-					<Col data={['MOST', 'LEAST', 'Change']} heightArr={[28, 28]} textStyle={styles.text} />
-					<Rows
-						data={[
-							[most.D, most.I, most.S, most.C, most.Star],
-							[least.D, least.I, least.S, least.C, least.Star],
-							[score.D, score.I, score.S, score.C, ''],
-						]}
-						flexArr={[2, 1, 1, 1, 1, 1]}
-						style={styles.tableRow}
-						textStyle={styles.text}
-					/>
-				</TableWrapper>
-			</Table>
+			<AppText title>Results</AppText>
 
 			<View style={styles.chart}>
 				<AppText title>Mask, Public self</AppText>
@@ -116,16 +107,28 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 					bezier
 				/>
 			</View>
+			<View style={{ marginBottom: 20 }}>
+				{showTable && (
+					<Table>
+						<Row data={state.tableHead} flexArr={[1.8]} style={styles.head} textStyle={styles.tableTitle} />
+						<TableWrapper style={styles.wrapper}>
+							<Col data={state.tableTitle} style={styles.title} textStyle={styles.tableTitle} />
+							<Rows data={state.tableData} flexArr={[1, 1, 1]} style={styles.row} textStyle={styles.text} />
+						</TableWrapper>
+					</Table>
+				)}
+				<Button onPress={() => setShowTable(!showTable)}>{showTable ? 'Hide Table' : 'Show Results'}</Button>
+			</View>
 		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
+	tableTitle: { fontWeight: 'bold', textAlign: 'center' },
 	row: {
 		flexDirection: 'row',
 		padding: 10,
 		justifyContent: 'flex-end',
-		marginRight: 15,
 	},
 	chart: { marginTop: 20 },
 	head: { height: 40, backgroundColor: '#f1f8ff' },
