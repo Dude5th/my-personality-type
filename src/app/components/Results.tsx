@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Table, Col, Row, Rows, TableWrapper } from 'react-native-reanimated-table';
 import { Button } from 'react-native-paper';
 import Seperator from './Seperator';
+import { cStyle, dStyle, iStyle, sStyle } from '../../helpers/styleByStyleAnalysis';
 
 export default function Results({ score, most, least }: Readonly<{ most: DiscS; least: DiscS; score: DiscS }>) {
 	const screenWidth = Dimensions.get('window').width - 20;
@@ -71,9 +72,17 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 			[score.D.toString(), score.I.toString(), score.S.toString(), score.C.toString(), ''],
 		],
 	};
+	const max = Math.max(score.D, score.I, score.S, score.C);
+	let desc = '';
+	if (score.D === max) desc = dStyle.description;
+	else if (score.I === max) desc = iStyle.description;
+	else if (score.S === max) desc = sStyle.description;
+	else if (score.C === max) desc = cStyle.description;
+
 	return (
 		<ScrollView>
 			<AppText title>Results</AppText>
+			<AppText>{desc}</AppText>
 			<Table>
 				<Row data={['Style Intensity']} style={styles.head} textStyle={styles.tableTitle} />
 				<Row data={['Style', 'High', 'Low']} flexArr={[1, 2, 2]} style={styles.head} textStyle={styles.tableTitle} />
