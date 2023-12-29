@@ -6,6 +6,7 @@ import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Table, Col, Row, Rows, TableWrapper } from 'react-native-reanimated-table';
 import { Button } from 'react-native-paper';
+import Seperator from './Seperator';
 
 export default function Results({ score, most, least }: Readonly<{ most: DiscS; least: DiscS; score: DiscS }>) {
 	const screenWidth = Dimensions.get('window').width - 20;
@@ -73,9 +74,31 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 	return (
 		<ScrollView>
 			<AppText title>Results</AppText>
-
+			<Table>
+				<Row data={['Style Intensity']} style={styles.head} textStyle={styles.tableTitle} />
+				<Row data={['Style', 'High', 'Low']} flexArr={[1, 2, 2]} style={styles.head} textStyle={styles.tableTitle} />
+				<TableWrapper style={styles.wrapper}>
+					<Col data={['D', 'I', 'S', 'C']} style={styles.title} textStyle={styles.tableTitle} />
+					<Rows
+						data={[
+							['Decides for all', 'Decides Not to decide'],
+							["You won't get a word IN", "You won't get a word OUT"],
+							['No changes please', 'Will change in an instant'],
+							['Lots of data - no conflict', "Don't bore me with the facts"],
+						]}
+						flexArr={[1, 1, 2]}
+						style={styles.row}
+						textStyle={styles.text}
+					/>
+				</TableWrapper>
+			</Table>
+			<AppText style={styles.text}>
+				Use the following table with the 3 graphs below to identify your personality highs and lows.
+			</AppText>
+			<Seperator />
 			<View style={styles.chart}>
 				<AppText title>Mask, Public self</AppText>
+				<AppText>How you are perceived in public</AppText>
 				<LineChart
 					data={mostData}
 					width={screenWidth}
@@ -84,9 +107,14 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 					verticalLabelRotation={30}
 					bezier
 				/>
+				<AppText>Public Perception</AppText>
+				<AppText>How one acts in response to the environment</AppText>
+				<AppText>Behaviour expected by others</AppText>
+				<AppText>This graph has the greatest potential for change</AppText>
 			</View>
 			<View style={styles.chart}>
 				<AppText title>Core, Private self</AppText>
+				<AppText>How you are in private</AppText>
 				<LineChart
 					data={leastData}
 					width={screenWidth}
@@ -95,9 +123,14 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 					verticalLabelRotation={30}
 					bezier
 				/>
+				<AppText>Stress Perception</AppText>
+				<AppText>Instinctive response to pressure</AppText>
+				<AppText>Blind spot</AppText>
+				<AppText>Instinctive responses are less likley to change</AppText>
 			</View>
 			<View style={styles.chart}>
 				<AppText title>Mirror, Perceived self</AppText>
+				<AppText>How you perceive yourself</AppText>
 				<LineChart
 					data={scoreData}
 					width={screenWidth}
@@ -106,6 +139,13 @@ export default function Results({ score, most, least }: Readonly<{ most: DiscS; 
 					verticalLabelRotation={30}
 					bezier
 				/>
+				<AppText>Self Perception</AppText>
+				<AppText>Displays the mental picture one has of themselves</AppText>
+				<AppText>Self image or self identity</AppText>
+				<AppText>
+					Change in one's perception can occur, but it is usually gradual and based on the changing demands of one's
+					envrionment
+				</AppText>
 			</View>
 			<View style={{ marginBottom: 20 }}>
 				{showTable && (

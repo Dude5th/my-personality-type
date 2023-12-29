@@ -17,23 +17,23 @@ export default function PersonalityTypesScreen() {
 	const setType = (type?: DiscEnum) => {
 		switch (type) {
 			case DiscEnum.D:
-				setPersonalityTitle('Outgoing + Task');
-				setPersonalityGroups(['Disc: D', 'Animal: Lion', 'Colour: Red']);
+				setPersonalityTitle('Outgoing & Task');
+				setPersonalityGroups(['Disc: (D)ominance', 'Animal: Lion', 'Colour: Red']);
 				setPersonalityType(dStyle);
 				break;
 			case DiscEnum.I:
-				setPersonalityTitle('Outgoing + People');
-				setPersonalityGroups(['Disc: I', 'Animal: Monkey', 'Colour: Yellow']);
+				setPersonalityTitle('Outgoing & People');
+				setPersonalityGroups(['Disc: (i)nfluence', 'Animal: Monkey', 'Colour: Yellow']);
 				setPersonalityType(iStyle);
 				break;
 			case DiscEnum.S:
-				setPersonalityTitle('Reserved + People');
-				setPersonalityGroups(['Disc: S', 'Animal: Owl', 'Colour: Green']);
+				setPersonalityTitle('Reserved & People');
+				setPersonalityGroups(['Disc: (S)teadiness', 'Animal: Owl', 'Colour: Green']);
 				setPersonalityType(sStyle);
 				break;
 			case DiscEnum.C:
-				setPersonalityTitle('Reserved + Task');
-				setPersonalityGroups(['Disc: C', 'Animal: Dolphin', 'Colour: Blue']);
+				setPersonalityTitle('Reserved & Task');
+				setPersonalityGroups(['Disc: (C)onscientiousness', 'Animal: Dolphin', 'Colour: Blue']);
 				setPersonalityType(cStyle);
 				break;
 			default:
@@ -144,10 +144,10 @@ export default function PersonalityTypesScreen() {
 						</AppText>
 						<AppText style={styles.mlr20}>Choose a personality type that best describes you or someone else.</AppText>
 						<View>
-							<AppButton onPress={() => setType(DiscEnum.D)}>Outgoing + Task</AppButton>
-							<AppButton onPress={() => setType(DiscEnum.I)}>Outgoing + People</AppButton>
-							<AppButton onPress={() => setType(DiscEnum.S)}>Reserved + People</AppButton>
-							<AppButton onPress={() => setType(DiscEnum.C)}>Reserved + Task</AppButton>
+							<AppButton onPress={() => setType(DiscEnum.D)}>Outgoing & Task</AppButton>
+							<AppButton onPress={() => setType(DiscEnum.I)}>Outgoing & People</AppButton>
+							<AppButton onPress={() => setType(DiscEnum.S)}>Reserved & People</AppButton>
+							<AppButton onPress={() => setType(DiscEnum.C)}>Reserved & Task</AppButton>
 						</View>
 					</>
 				)}

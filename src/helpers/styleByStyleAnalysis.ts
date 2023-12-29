@@ -1,4 +1,5 @@
 export interface StyleByStyleAnalysis {
+	description: string;
 	generalCharacteristics: string[];
 	canBePerceivedAs: string[];
 	occupationalCharacteristics: string[];
@@ -9,6 +10,8 @@ export interface StyleByStyleAnalysis {
 }
 
 export const dStyle: StyleByStyleAnalysis = {
+	description:
+		'People with D personalities tend to be confident and place an emphasis on accomplishing bottom-line results.',
 	generalCharacteristics: [
 		'Strong Willed',
 		'Resolute',
@@ -83,6 +86,8 @@ export const dStyle: StyleByStyleAnalysis = {
 };
 
 export const iStyle: StyleByStyleAnalysis = {
+	description:
+		'People with i personalities tend to be more open and place an emphasis on relationships and influencing or persuading others.',
 	generalCharacteristics: [
 		'Outgoing", "Charismatic',
 		'Warm',
@@ -161,6 +166,7 @@ export const iStyle: StyleByStyleAnalysis = {
 };
 
 export const sStyle: StyleByStyleAnalysis = {
+	description: 'People with S personalities tend to be dependable and place an emphasis on cooperation and sincerity.',
 	generalCharacteristics: [
 		'Likable',
 		'Efficient',
@@ -223,6 +229,7 @@ export const sStyle: StyleByStyleAnalysis = {
 };
 
 export const cStyle: StyleByStyleAnalysis = {
+	description: 'People with C personalities tend to place an emphasis on quality, accuracy, expertise, and competency.',
 	generalCharacteristics: [
 		'Analytical',
 		'Perfectionist',
