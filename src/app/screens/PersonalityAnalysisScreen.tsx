@@ -10,14 +10,15 @@ import BackButton from '../components/BackButton';
 import NextButton from '../components/NextButton';
 
 export default function PersonalityAnalysisScreen() {
-	const [counter, setCounter] = useState<number>(25); // must be >= 1
+	const [counter, setCounter] = useState<number>(1); // must be >= 1
 	const [mostData, setMostData] = useState<DiscEnum[]>([]);
 	const [leastData, setLeastData] = useState<DiscEnum[]>([]);
-	const [score, setScore] = useState<Score | undefined>({
-		score: { D: 7, I: -3, S: -5, C: 0, Star: 0 },
-		mostScore: { D: 8, I: 2, S: 3, C: 5, Star: 6 },
-		leastScore: { D: 1, I: 5, S: 8, C: 5, Star: 5 },
-	});
+	const [score, setScore] = useState<Score | undefined>();
+	// 	{
+	// 	score: { D: 7, I: -3, S: -5, C: 0, Star: 0 },
+	// 	mostScore: { D: 8, I: 2, S: 3, C: 5, Star: 6 },
+	// 	leastScore: { D: 1, I: 5, S: 8, C: 5, Star: 5 },
+	// }
 
 	const onMostChange = (most: DiscEnum) => {
 		if (mostData.length < counter) {

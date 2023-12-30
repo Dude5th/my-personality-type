@@ -139,9 +139,6 @@ export default function PersonalityTypesScreen() {
 					</>
 				) : (
 					<>
-						<AppText style={styles.mlr20} title>
-							Personality Types
-						</AppText>
 						<AppText style={styles.mlr20}>Choose a personality type that best describes you or someone else.</AppText>
 						<View>
 							<AppButton onPress={() => setType(DiscEnum.D)}>Outgoing & Task</AppButton>

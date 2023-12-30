@@ -13,8 +13,16 @@ export default function DrawerNavigation() {
 		<NavigationContainer>
 			<Drawer.Navigator drawerContent={props => <SideScreen {...props} />}>
 				<Drawer.Screen name='Home' component={HomeScreen} />
-				<Drawer.Screen name='PersonalityAnalysis' component={PersonalityAnalysisScreen} />
-				<Drawer.Screen name='PersonalityTypes' component={PersonalityTypesScreen} />
+				<Drawer.Screen
+					name='PersonalityAnalysis'
+					options={{ title: 'Personality Analysis' }}
+					component={PersonalityAnalysisScreen}
+				/>
+				<Drawer.Screen
+					name='PersonalityTypes'
+					options={{ title: 'Personality Types' }}
+					component={PersonalityTypesScreen}
+				/>
 				<Drawer.Screen name='Profile' component={ProfileScreen} />
 			</Drawer.Navigator>
 		</NavigationContainer>
